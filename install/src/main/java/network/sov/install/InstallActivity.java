@@ -46,9 +46,8 @@ public class InstallActivity extends AppCompatActivity {
         installButton.setOnClickListener(new View.OnClickListener() {@Override public void onClick(View view) {
             System.out.println(">>>>> BUTTON PRESSED");
             Intent intent = new Intent(getApplicationContext(), InstallActivity.class);
-
-//            InstantApps.showInstallPrompt(InstallActivity.this, intent, 0, null);
-            startActivity(intent);
+            intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+            InstantApps.showInstallPrompt(InstallActivity.this, intent, 0, null);
         }});
     }
 }
