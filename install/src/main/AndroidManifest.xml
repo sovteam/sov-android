@@ -25,6 +25,9 @@
                 android:name="default-url"
                 android:value="https://sov.network/link" />
         </activity>
+        <activity
+            android:name=".DummyActivity"
+            android:exported="true" />
     </application>
 
 </manifest>
