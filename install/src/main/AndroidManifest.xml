@@ -3,35 +3,27 @@
     package="network.sov.install">
 
     <application>
-        <activity android:name=".InstallActivity">
-            <intent-filter android:order="1"
-                android:autoVerify="true">
-                <action android:name="android.intent.action.VIEW" />
-
-                <category android:name="android.intent.category.BROWSABLE" />
-                <category android:name="android.intent.category.DEFAULT" />
-
-                <data
-                    android:host="sov.network"
-                    android:pathPrefix="/link"
-                    android:scheme="https" />
-            </intent-filter>
+        <activity android:name=".InstallActivity"
+            android:launchMode="singleTask">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-            <intent-filter>
+
+            <intent-filter android:autoVerify="true">
                 <action android:name="android.intent.action.VIEW" />
 
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
 
-                <data
-                    android:scheme="http"
-                    android:host="sov.network"
-                    android:pathPrefix="/link" />
+                <data android:scheme="http" />
+                <data android:scheme="https" />
+                <data android:host="sov.network" />
+                <data android:pathPrefix="/link" />
             </intent-filter>
+            <meta-data
+                android:name="default-url"
+                android:value="https://sov.network/link" />
         </activity>
     </application>
 
