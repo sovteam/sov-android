@@ -1,16 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="network.sov.install">
 
     <application>
-        <activity android:name=".InstallActivity"
+        <meta-data
+            android:name="asset_statements"
+            android:resource="@string/asset_statements" />
+
+        <activity
+            android:name=".InstallActivity"
             android:launchMode="singleTask">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
 
-            <intent-filter android:autoVerify="true">
+            <meta-data
+                android:name="default-url"
+                android:value="https://sov.network/link/install" />
+
+            <intent-filter
+                android:autoVerify="true"
+                tools:targetApi="m"
+                android:order="1">
                 <action android:name="android.intent.action.VIEW" />
 
                 <category android:name="android.intent.category.DEFAULT" />
@@ -18,16 +31,30 @@
 
                 <data android:scheme="http" />
                 <data android:scheme="https" />
-                <data android:host="sov.network" />
-                <data android:pathPrefix="/link" />
+                <data
+                    android:host="sov.network"
+                    android:pathPrefix="/link/install" />
             </intent-filter>
-            <meta-data
-                android:name="default-url"
-                android:value="https://sov.network/link" />
         </activity>
         <activity
             android:name=".DummyActivity"
-            android:exported="true" />
+            android:exported="true">
+            <intent-filter
+                android:autoVerify="true"
+                tools:targetApi="m"
+                android:order="2">
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data android:scheme="http" />
+                <data android:scheme="https" />
+                <data
+                    android:host="sov.network"
+                    android:pathPrefix="/link/dummy" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

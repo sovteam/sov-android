@@ -1,13 +1,18 @@
 package network.sov.install;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.TextView;
 
+// import com.google.android.gms.instantapps.PackageManagerCompat;
 import com.google.android.instantapps.InstantApps;
+
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
+import java.util.HashMap;
+import java.util.Map;
 
 public class InstallActivity extends AppCompatActivity {
 
@@ -18,13 +23,9 @@ public class InstallActivity extends AppCompatActivity {
 
         System.out.println(">>>>> CREATE");
 
-        String val = getIntent().getStringExtra("AppInstalled");
-        if (val != null) {
-            System.out.println(">>>>>> extra val: " + val);
-        } else {
-            System.out.println(">>>>>> extra val is null");
-        }
-        ((TextView)findViewById(R.id.hello_label)).setText("Hello " + getIntent().getDataString() + System.currentTimeMillis());
+        /*PackageManagerCompat packMan = com.google.android.gms.instantapps.InstantApps.getPackageManagerCompat(getApplicationContext());
+        if (packMan != null)
+            printCookie(packMan);*/
 
         findViewById(R.id.dummy_button).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -40,6 +41,27 @@ public class InstallActivity extends AppCompatActivity {
         init();
     }
 
+    /*private void printCookie(PackageManagerCompat packMan) {
+        byte[] cookie = packMan.getInstantAppCookie();
+
+        ByteArrayInputStream byteIn = new ByteArrayInputStream(cookie);
+        Map<String, String> map = null;
+        try {
+            ObjectInputStream in = new ObjectInputStream(byteIn);
+            map = (Map<String, String>) in.readObject();
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        if (map != null) {
+            System.out.println(">>>>>> extra val: " + map.get("MSG"));
+            ((TextView)findViewById(R.id.hello_label)).setText("Hello " + map.get("MSG") + " " + System.currentTimeMillis());
+        } else {
+            System.out.println(">>>>>> extra val is null");
+            ((TextView)findViewById(R.id.hello_label)).setText("Hello #NoCookies " + System.currentTimeMillis());
+        }
+    }*/
+
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
@@ -49,7 +71,6 @@ public class InstallActivity extends AppCompatActivity {
     }
 
     private void init() {
-
         View installButton = findViewById(R.id.install_button);
         if (InstantApps.isInstantApp(this))
             initInstantApp(installButton);
@@ -64,15 +85,26 @@ public class InstallActivity extends AppCompatActivity {
             System.out.println(">>>>> BUTTON PRESSED: " + getIntent().getDataString());
             // Intent intent = new Intent(InstallActivity.this, DummyActivity.class);
 
-            final Intent intent = new Intent();
-            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            intent.setClassName("network.sov.app", DummyActivity.class.getName());
-            intent.putExtra("AppInstalled", "SOV");
+            /*PackageManagerCompat packMan = com.google.android.gms.instantapps.InstantApps.getPackageManagerCompat(getApplicationContext());
+            if (packMan != null) {
+                Map<String, String> data = new HashMap<>();
+                data.put("MSG", "hello");
 
-            /*Bundle bundle = new Bundle();
-            bundle.putString("AppInstalled", "SOV");*/
+                try {
+                    ByteArrayOutputStream byteOut = new ByteArrayOutputStream();
+                    ObjectOutputStream out = new ObjectOutputStream(byteOut);
+                    out.writeObject(data);
+                    out.close();
+                    packMan.setInstantAppCookie(byteOut.toByteArray());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }*/
 
-            InstantApps.showInstallPrompt(InstallActivity.this, intent, 7, "InstallActivity");
+            /*Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://sov.network/link/dummy"));
+            intent.addCategory(Intent.CATEGORY_BROWSABLE);
+            intent.putExtra("AppInstalled", "SOV by Instant App");*/
+            InstantApps.showInstallPrompt(InstallActivity.this, 0, null);
         }});
     }
 }
