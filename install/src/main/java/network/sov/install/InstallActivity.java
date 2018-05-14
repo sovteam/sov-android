@@ -1,6 +1,7 @@
 package network.sov.install;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -101,10 +102,10 @@ public class InstallActivity extends AppCompatActivity {
                 }
             }*/
 
-            /*Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://sov.network/link/dummy"));
+            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://sov.network/link/dummy"));
             intent.addCategory(Intent.CATEGORY_BROWSABLE);
-            intent.putExtra("AppInstalled", "SOV by Instant App");*/
-            InstantApps.showInstallPrompt(InstallActivity.this, 0, null);
+            intent.putExtra("AppInstalled", "SOV by Instant App");
+            InstantApps.showInstallPrompt(InstallActivity.this, intent, 0, null);
         }});
     }
 }
