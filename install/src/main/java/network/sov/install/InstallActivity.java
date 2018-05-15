@@ -5,15 +5,13 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.TextView;
 
-// import com.google.android.gms.instantapps.PackageManagerCompat;
 import com.google.android.instantapps.InstantApps;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.ObjectOutputStream;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.Locale;
+
+// import com.google.android.gms.instantapps.PackageManagerCompat;
 
 public class InstallActivity extends AppCompatActivity {
 
@@ -23,12 +21,13 @@ public class InstallActivity extends AppCompatActivity {
         setContentView(R.layout.activity_install);
 
         System.out.println(">>>>> CREATE");
+        ((TextView)findViewById(R.id.versionText)).setText(String.format(Locale.US, "Version: %d", BuildConfig.VERSION_CODE));
 
         /*PackageManagerCompat packMan = com.google.android.gms.instantapps.InstantApps.getPackageManagerCompat(getApplicationContext());
         if (packMan != null)
             printCookie(packMan);*/
 
-        findViewById(R.id.dummy_button).setOnClickListener(new View.OnClickListener() {
+        /*findViewById(R.id.dummy_button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 final Intent intent = new Intent();
@@ -37,7 +36,7 @@ public class InstallActivity extends AppCompatActivity {
                 intent.putExtra("AppInstalled", "SOV");
                 startActivity(intent);
             }
-        });
+        });*/
 
         init();
     }
@@ -105,7 +104,7 @@ public class InstallActivity extends AppCompatActivity {
             Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://sov.network/link/dummy"));
             intent.addCategory(Intent.CATEGORY_BROWSABLE);
             intent.putExtra("AppInstalled", "SOV by Instant App");
-            InstantApps.showInstallPrompt(InstallActivity.this, intent, 0, null);
+            InstantApps.showInstallPrompt(InstallActivity.this, intent,0, "Xispas");
         }});
     }
 }

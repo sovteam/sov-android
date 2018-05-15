@@ -6,8 +6,8 @@ android {
         applicationId "network.sov.app"
         minSdkVersion 23
         targetSdkVersion 27
-        versionCode 17
-        versionName "17"
+        versionCode 20
+        versionName "20"
     }
     buildTypes {
        release {
