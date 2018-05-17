@@ -3,13 +3,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="network.sov.install">
 
+    <uses-permission android:name="android.permission.INTERNET"/>
+
     <application>
         <meta-data
             android:name="asset_statements"
             android:resource="@string/asset_statements" />
 
         <activity
-            android:name=".InstallActivity"
+            android:name=".ui.InstallActivity"
             android:launchMode="singleTask">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
