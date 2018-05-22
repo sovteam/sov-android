@@ -1,6 +1,7 @@
 package network.sov.install.ui;
 
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
@@ -71,6 +72,26 @@ public class InstallActivity extends AppCompatActivity {
         init();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        updateSovInstallAction();
+        // updateAppInstallAction();
+    }
+
+    private void updateSovInstallAction() {
+        Button installButton = sovBox.findViewById(R.id.installButton);
+        TextView installedLabel = sovBox.findViewById(R.id.installedLabel);
+        if (InstantApps.isInstantApp(this)) {
+            installButton.setVisibility(View.VISIBLE);
+            installedLabel.setVisibility(View.GONE);
+        } else {
+            installButton.setVisibility(View.GONE);
+            installedLabel.setVisibility(View.VISIBLE);
+        }
+    }
+
     private void updateAppBox(JSONObject json) {
         final View appBox = findViewById(R.id.appBox);
         try {
@@ -124,14 +145,6 @@ public class InstallActivity extends AppCompatActivity {
         return ret;
     }
 
-    @Override
-    protected void onNewIntent(Intent intent) {
-        super.onNewIntent(intent);
-
-        System.out.println(">>>>> NEW INTENT");
-        init();
-    }
-
     private void init() {
         View installButton = sovBox.findViewById(R.id.installButton);
         if (InstantApps.isInstantApp(this))
@@ -147,5 +160,14 @@ public class InstallActivity extends AppCompatActivity {
             intent.putExtra("AppInstalled", "SOV by Instant App");
             InstantApps.showInstallPrompt(InstallActivity.this, intent,0, "Xispas");
         }});
+    }
+
+    private boolean isPackageInstalled(String packageName, PackageManager packageManager) {
+        try {
+            packageManager.getPackageInfo(packageName, 0);
+            return true;
+        } catch (PackageManager.NameNotFoundException e) {
+            return false;
+        }
     }
 }
